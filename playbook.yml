@@ -1,16 +1,32 @@
-- name: configure VM
+- name: First project with Ansible
   hosts: maria-from-Azure
   remote_user: maria-queen-of-azure
+  become: yes
+  become_method: sudo
+  
   tasks:
-  - name: create file
-    file:
-      path: ./test.py
-      state: touch
-  - name: Install packages
-    apt: update_cache=yes name={{ item }} state=present
-    with_items:
-      - git
-      - python-pip
-      - psycopg2
+    - name: install pip
+      apt:
+        name: python-pip
+    - name: install pip3
+      apt:
+        name: python3-pip
+    - name: install psycopg2-binary
+        name:
+          - psycopg2-binary     
+          - Flask
+    - name: install postgres
+      apt: 
+        name: postgresql
+        update_cache: yes  
+    - name: install git
+      apt: 
+        name: git 
+        update_cache: yes  
+    - name: clone git repository
+      git:
+        repo: https://github.com/MarriaMarria/Ansible
+        dest: /home/maria-queen-of-azure/Projects/Ansible
 
+    
 
