@@ -1,0 +1,16 @@
+- name: configure VM
+  hosts: maria-from-Azure
+  remote_user: maria-queen-of-azure
+  tasks:
+  - name: create file
+    file:
+      path: ./test.py
+      state: touch
+  - name: Install packages
+    apt: update_cache=yes name={{ item }} state=present
+    with_items:
+      - git
+      - python-pip
+      - psycopg2
+
+
