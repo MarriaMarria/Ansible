@@ -21,19 +21,28 @@ dictConfig({
 
 app = Flask(__name__)
 
-@app.route('/')
+# welcome visitors
+@app.route('/', methods=['GET'])
 def test():
     return render_template('index.html')
 
-@app.route('/test/', methods=['GET'])
+# increment visitors +1
+@app.route('/plus/', methods=['GET'])
 def test_increment():
-    result = conn.increment()
-    return result
+    cursor.execute("UPDATE testing SET ID = ID + 1")
+    conn.commit()
+    return "We got +1, jipiii!"
+
+# show id 
+@app.route('/id/', methods=['GET'])
+def show_id(): 
+    cursor.execute("SELECT ID FROM testing")
+    conn.commit()
+    result = cursor.fetchall()
+
+    return str(result[0][0])
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3001, debug=True)
-
-
-#      sudo -u postgres psql postgres     apres==> \password postgres    apres tu met me mot de passe ==> \q     pour sortir
-# [3:04 PM]
-# et apres    sudo service postgresql restart
