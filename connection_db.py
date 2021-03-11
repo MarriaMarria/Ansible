@@ -1,9 +1,6 @@
 import psycopg2
-
 # postgres cnnection
-
 host = 'localhost'
-# port= 5432, \
 dbname = "postgres"
 user = 'postgres'
 password = 'PlayNice1987'
