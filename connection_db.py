@@ -2,8 +2,8 @@ import psycopg2
 # postgres cnnection
 host = 'localhost'
 dbname = "postgres"
-user = 'postgres'
-password = 'PlayNice1987'
+user = 'maria'
+password = 'password'
 
 conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, password)
 conn = psycopg2.connect(conn_string)
