@@ -1,11 +1,25 @@
 ---
 - name: First project with Ansible
-  hosts: maria-from-Azure
-  remote_user: maria-queen-of-azure
+  hosts: maria
+  remote_user: maria
   become: yes
   become_method: sudo
 
   tasks: 
+    - name: installing postgres
+      apt:
+        name:
+          - postgresql
+        state: latest
+
+        # https://docs.ansible.com/ansible/2.5/modules/postgresql_user_module.html
+    - name: creating a user for postgresql
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        name: "maria"
+        password: "password"
+
     - name: installing packages
       apt: 
         name:
@@ -28,26 +42,22 @@
     - name: clone git repository
       git:
         repo: https://github.com/MarriaMarria/Ansible
-        dest: /home/maria-queen-of-azure/Projects/Ansible
+        dest: /home/maria/Projects/Ansible
         update: yes
         # force: yes
-
-    # https://docs.ansible.com/ansible/2.5/modules/postgresql_user_module.html
-    - name: create a user for postgresql
-      become: yes
-      become_user: postgres
-      postgresql_user:
-        name: "maria"
-        password: "password"
 
     - name: create database
       become: yes
       become_user: postgres
       postgresql_db:
         name: "maria_db"
-        owner: "postgres"
+        owner: "postgres"execute script 
 
+    - name: executing script connection_db.python
+      command: python3 ./
 
+    - name: executing script rounting.python
+      command: python3 ./
       # git:
       #   repo: "https://github.com/{{ github_user }}/{{ app_name }}.git"
       #   dest: /home/{{ ansible_ssh_user }}/{{ app_name }}
